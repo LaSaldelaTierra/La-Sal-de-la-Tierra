@@ -1,0 +1,295 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #f8f5f0;
+  --color-warm-beige: #e8dccb;
+  --color-earth: #6b4f3a;
+  --color-sand: #d6c2a8;
+  --color-olive: #7a8450;
+  --color-earth-light: #8a6f58;
+  --color-earth-dark: #4a3628;
+
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: Manrope, system-ui, sans-serif;
+
+  --animate-fade-up: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  --animate-fade-in: fade-in 0.6s ease-out forwards;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-earth);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Horizontal padding — mobile-first, touch-friendly gutters */
+.container-padding {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-padding {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-padding {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+::selection {
+  background-color: color-mix(in srgb, var(--color-sand) 60%, transparent);
+  color: var(--color-earth-dark);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-olive);
+  outline-offset: 3px;
+}
+
+/* Layout — vertical rhythm between sections */
+.section-padding {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 640px) {
+  .section-padding {
+    padding-top: 3.75rem;
+    padding-bottom: 3.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+  }
+}
+
+/* Space from section heading to main content */
+.section-content {
+  margin-top: 2rem;
+}
+
+@media (min-width: 640px) {
+  .section-content {
+    margin-top: 2.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-content {
+    margin-top: 2.5rem;
+  }
+}
+
+/* Navigation */
+.nav-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-earth);
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-link:hover {
+  color: var(--color-earth);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Scripture quote — hero */
+.scripture-quote {
+  position: relative;
+  padding: 1.5rem 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .scripture-quote {
+    padding: 2rem 1.5rem;
+  }
+}
+
+.scripture-quote::before,
+.scripture-quote::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2.5rem;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--color-sand) 80%, transparent),
+    transparent
+  );
+}
+
+.scripture-quote::before {
+  top: 0;
+}
+
+.scripture-quote::after {
+  bottom: 0;
+}
+
+/* Forms */
+.form-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-earth);
+}
+
+.form-input {
+  margin-top: 0.625rem;
+  width: 100%;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-sand) 70%, transparent);
+  background: transparent;
+  padding: 0.75rem 0;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  color: var(--color-earth);
+  transition: border-color 0.3s ease;
+}
+
+.form-input::placeholder {
+  color: color-mix(in srgb, var(--color-earth-light) 45%, transparent);
+}
+
+.form-input:focus {
+  border-color: var(--color-earth);
+  outline: none;
+}
+
+.form-input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Contact channels */
+.contact-channel {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 3.5rem;
+  padding: 1rem 1.25rem;
+  border-radius: 2px;
+  background-color: var(--color-cream);
+  border: 1px solid color-mix(in srgb, var(--color-sand) 35%, transparent);
+  transition:
+    box-shadow 0.4s ease,
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s ease;
+}
+
+.contact-channel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -8px color-mix(in srgb, var(--color-earth) 12%, transparent);
+  border-color: color-mix(in srgb, var(--color-sand) 60%, transparent);
+}
+
+.contact-channel-icon {
+  display: flex;
+  height: 3rem;
+  width: 3rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: color-mix(in srgb, var(--color-olive) 10%, transparent);
+  color: var(--color-olive);
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease;
+}
+
+.contact-channel:hover .contact-channel-icon {
+  background-color: var(--color-olive);
+  color: var(--color-cream);
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 {
+  transition-delay: 0.1s;
+}
+.reveal-delay-2 {
+  transition-delay: 0.2s;
+}
+.reveal-delay-3 {
+  transition-delay: 0.3s;
+}
+.reveal-delay-4 {
+  transition-delay: 0.4s;
+}
+
+/* Subtle grain overlay */
+.grain-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.025;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
