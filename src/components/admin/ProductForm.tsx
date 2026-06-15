@@ -5,7 +5,7 @@ import Image from "next/image";
 import type { Producto, ProductoInput } from "@/types/product";
 import { Button } from "@/components/ui/Button";
 import { sanitizeDigits } from "@/lib/products-utils";
-import { uploadProductImage } from "@/lib/storage";
+import { uploadProductImage } from "@/lib/cloudinary";
 
 interface ProductFormProps {
   initialData?: Producto;

@@ -37,9 +37,9 @@ export async function Products() {
             {error}
           </p>
         ) : products && products.length > 0 ? (
-          <div className="section-content grid gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3 lg:gap-x-7 lg:gap-y-9 [&>*:last-child]:sm:col-span-2 [&>*:last-child]:sm:max-w-sm [&>*:last-child]:sm:justify-self-center lg:[&>*:last-child]:col-span-1 lg:max-w-none [&>*]:min-w-0">
-            {products.slice(0, 3).map((product, index) => (
-              <ScrollReveal key={product.id} delay={((index % 3) + 1) as 1 | 2 | 3}>
+          <div className="section-content grid items-stretch gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-4 lg:max-w-none [&>*]:min-w-0">
+            {products.slice(0, 8).map((product, index) => (
+              <ScrollReveal key={product.id} delay={((index % 4) + 1) as 1 | 2 | 3 | 4}>
                 <ProductCard product={product} />
               </ScrollReveal>
             ))}

@@ -41,7 +41,7 @@ export function formatPrice(precio: number): string {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(precio);
-  return `$${amount} CLP`;
+  return `$${amount}`;
 }
 
 /** Solo dígitos 0-9; cadena vacía permitida. */
