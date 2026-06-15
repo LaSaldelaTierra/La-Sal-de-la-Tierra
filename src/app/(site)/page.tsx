@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import { Hero } from "@/components/sections/Hero";
 import { Products } from "@/components/sections/Products";
+import { ProductsSkeleton } from "@/components/sections/ProductsSkeleton";
 import { About } from "@/components/sections/About";
 import { Process } from "@/components/sections/Process";
 import { Philosophy } from "@/components/sections/Philosophy";
@@ -10,7 +12,9 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <Products />
+      <Suspense fallback={<ProductsSkeleton />}>
+        <Products />
+      </Suspense>
       <About />
       <Process />
       <Philosophy />

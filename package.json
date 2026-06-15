@@ -6,11 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "setup:admin": "node scripts/setup-admin.mjs"
   },
   "dependencies": {
     "@fontsource/manrope": "^5.2.8",
     "@fontsource/playfair-display": "^5.2.8",
+    "cloudinary": "^2.10.0",
+    "firebase": "^12.14.0",
     "next": "^15.3.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"

@@ -215,6 +215,24 @@ body {
   cursor: not-allowed;
 }
 
+/* Admin panel inputs */
+.admin-input {
+  width: 100%;
+  border-radius: 2px;
+  border: 1px solid color-mix(in srgb, var(--color-sand) 60%, transparent);
+  background-color: var(--color-cream);
+  padding: 0.75rem 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  color: var(--color-earth);
+  transition: border-color 0.3s ease;
+}
+
+.admin-input:focus {
+  border-color: var(--color-earth);
+  outline: none;
+}
+
 /* Contact channels */
 .contact-channel {
   display: flex;

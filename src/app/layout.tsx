@@ -5,8 +5,6 @@ import "@fontsource/playfair-display/600-italic.css";
 import "@fontsource/manrope/400.css";
 import "@fontsource/manrope/500.css";
 import "@fontsource/manrope/600.css";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { IMAGES } from "@/lib/images";
 import { SITE } from "@/lib/constants";
@@ -51,9 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${SITE.name} | ${SITE.tagline}`,
     description: SITE.description,
-    images: [
-      IMAGES.og,
-    ],
+    images: [IMAGES.og],
   },
   robots: {
     index: true,
@@ -85,9 +81,7 @@ export default function RootLayout({
         >
           Saltar al contenido
         </a>
-        <Navbar />
-        <main id="main-content">{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );
