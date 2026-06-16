@@ -46,7 +46,9 @@ export async function createProduct(data: ProductoInput): Promise<string> {
     payload.categoria = data.categoria;
   }
 
+  console.log("[ProductsAdmin] createProduct payload", payload);
   const ref = await addDoc(collection(db, COLLECTION), payload);
+  console.log("[ProductsAdmin] createProduct success", { id: ref.id });
   return ref.id;
 }
 
@@ -65,7 +67,9 @@ export async function updateProduct(
   if (data.destacado !== undefined) payload.destacado = data.destacado;
   if (data.categoria !== undefined) payload.categoria = data.categoria;
 
+  console.log("[ProductsAdmin] updateProduct", { id, payload });
   await updateDoc(doc(db, COLLECTION, id), payload);
+  console.log("[ProductsAdmin] updateProduct success", { id });
 }
 
 export async function deleteProduct(id: string): Promise<void> {

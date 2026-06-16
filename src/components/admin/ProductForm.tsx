@@ -103,9 +103,17 @@ export function ProductForm({ initialData, onSubmit, submitLabel }: ProductFormP
     event.preventDefault();
     setError(null);
 
+    console.log("[ProductForm] submit started", {
+      initialDataId: initialData?.id,
+      submitLabel,
+      fields,
+      hasExistingImage: Boolean(existingImage),
+    });
+
     const hasImage = Boolean(imageFile || existingImage);
     const validationError = validateForm(fields, hasImage);
     if (validationError) {
+      console.error("[ProductForm] validation failed", validationError);
       setError(validationError);
       return;
     }
@@ -117,9 +125,27 @@ export function ProductForm({ initialData, onSubmit, submitLabel }: ProductFormP
 
       if (imageFile) {
         setUploading(true);
+        console.log("[ProductForm] uploading image", {
+          name: imageFile.name,
+          size: imageFile.size,
+          type: imageFile.type,
+        });
+
         imagenUrl = await uploadProductImage(imageFile, initialData?.id);
+
+        console.log("[ProductForm] image uploaded", { imagenUrl });
         setUploading(false);
       }
+
+      console.log("[ProductForm] calling onSubmit", {
+        nombre: fields.nombre,
+        precio: fields.precio,
+        stock: fields.stock,
+        activo: fields.activo,
+        imagen: imagenUrl,
+        destacado: fields.destacado,
+        categoria: fields.categoria,
+      });
 
       await onSubmit({
         nombre: fields.nombre.trim(),
@@ -131,13 +157,17 @@ export function ProductForm({ initialData, onSubmit, submitLabel }: ProductFormP
         destacado: fields.destacado,
         categoria: fields.categoria.trim() || undefined,
       });
+
+      console.log("[ProductForm] submit completed successfully");
     } catch (err) {
+      console.error("[ProductForm] submit error", err);
       setError(
         err instanceof Error ? err.message : "No se pudo guardar el producto.",
       );
     } finally {
       setUploading(false);
       setSaving(false);
+      console.log("[ProductForm] submit finished", { saving: false, uploading: false });
     }
   };
 

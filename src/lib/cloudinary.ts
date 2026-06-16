@@ -26,8 +26,16 @@ export function validateImageFile(file: File): string | null {
 }
 
 export async function uploadProductImage(file: File, productId?: string): Promise<string> {
+  console.log("[Cloudinary] uploadProductImage start", {
+    name: file.name,
+    type: file.type,
+    size: file.size,
+    productId,
+  });
+
   const validationError = validateImageFile(file);
   if (validationError) {
+    console.error("[Cloudinary] validation failed", validationError);
     throw new Error(validationError);
   }
 
@@ -35,7 +43,9 @@ export async function uploadProductImage(file: File, productId?: string): Promis
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
 
   if (!cloudName || !uploadPreset) {
-    throw new Error("Falta configurar Cloudinary. Define NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME y NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET.");
+    const message = "Falta configurar Cloudinary. Define NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME y NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET.";
+    console.error("[Cloudinary] missing config", { cloudName, uploadPreset });
+    throw new Error(message);
   }
 
   const form = new FormData();
@@ -45,6 +55,7 @@ export async function uploadProductImage(file: File, productId?: string): Promis
   else form.append("folder", "productos/temp");
 
   const url = `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`;
+  console.log("[Cloudinary] sending request", { url, folder: productId ? `productos/${productId}` : "productos/temp" });
 
   const res = await fetch(url, {
     method: "POST",
@@ -53,8 +64,10 @@ export async function uploadProductImage(file: File, productId?: string): Promis
 
   const json = await res.json();
   if (!res.ok) {
+    console.error("[Cloudinary] upload failed", { status: res.status, body: json });
     throw new Error(json.error?.message || "Error subiendo imagen a Cloudinary.");
   }
 
+  console.log("[Cloudinary] upload success", { secure_url: json.secure_url });
   return json.secure_url as string;
 }
