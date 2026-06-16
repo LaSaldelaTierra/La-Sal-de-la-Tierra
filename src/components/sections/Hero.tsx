@@ -17,15 +17,15 @@ export function Hero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover scale-105"
+          className="object-cover"
         />
-        <div className="absolute inset-0 bg-cream/88 sm:bg-cream/82" />
-        <div className="absolute inset-0 bg-gradient-to-b from-cream/40 via-transparent to-cream" />
+        <div className="absolute inset-0 bg-cream/75 sm:bg-cream/70" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent to-cream" />
       </div>
 
       <div className="relative mx-auto flex min-h-[100dvh] max-w-4xl flex-col items-center justify-center px-4 pb-10 pt-[calc(4.25rem+1rem)] text-center sm:px-8 sm:pb-12 sm:pt-[calc(4.75rem+1.25rem)]">
         <div className="animate-[fade-up_1s_cubic-bezier(0.22,1,0.36,1)_forwards]">
-          <p className="mb-4 font-sans text-[10px] font-medium uppercase tracking-[0.32em] text-olive/90 sm:mb-5 sm:text-[11px] sm:tracking-[0.36em]">
+          <p className="mb-4 font-sans text-[12px] font-bold uppercase tracking-[0.32em] text-earth/80 sm:mb-5 sm:text-[14px] sm:tracking-[0.36em]">
             El sabor de Chile en tu mesa
           </p>
 

@@ -10,9 +10,18 @@ export default function NuevoProductoPage() {
   const router = useRouter();
 
   const handleSubmit = async (data: ProductoInput) => {
-    await createProduct(data);
-    router.push("/admin/productos");
-    router.refresh();
+    console.log("[NuevoProductoPage] handleSubmit start", data);
+    try {
+      const id = await createProduct(data);
+      console.log("[NuevoProductoPage] createProduct completed", { id });
+      router.push("/admin/productos");
+      console.log("[NuevoProductoPage] router.push called");
+      router.refresh();
+      console.log("[NuevoProductoPage] router.refresh called");
+    } catch (error) {
+      console.error("[NuevoProductoPage] handleSubmit failed", error);
+      throw error;
+    }
   };
 
   return (

@@ -4,9 +4,9 @@
  */
 
 export const IMAGES = {
-  hero: "/images/gallery/SalParrilla.png",
+  hero: "/images/gallery/fondoPag.jpg",
   about: "/images/gallery/molinillo.png",
-  og: "/images/gallery/SalParrilla.png",
+  og: "/images/gallery/fondoPag.jpg",
 
   products: {
     salPimientaNegra: "/images/gallery/molinillo.png",

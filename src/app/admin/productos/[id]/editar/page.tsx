@@ -33,9 +33,18 @@ export default function EditarProductoPage() {
   }, [params.id]);
 
   const handleSubmit = async (data: ProductoInput) => {
-    await updateProduct(params.id, data);
-    router.push("/admin/productos");
-    router.refresh();
+    console.log("[EditarProductoPage] handleSubmit start", { id: params.id, data });
+    try {
+      await updateProduct(params.id, data);
+      console.log("[EditarProductoPage] updateProduct completed", { id: params.id });
+      router.push("/admin/productos");
+      console.log("[EditarProductoPage] router.push called");
+      router.refresh();
+      console.log("[EditarProductoPage] router.refresh called");
+    } catch (error) {
+      console.error("[EditarProductoPage] handleSubmit failed", error);
+      throw error;
+    }
   };
 
   if (loading) {

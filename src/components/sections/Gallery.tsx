@@ -3,19 +3,13 @@ import { galleryImages } from "@/data/gallery";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
-const spanClasses: Record<string, string> = {
-  normal: "col-span-1 row-span-1",
-  tall: "col-span-1 row-span-1 sm:row-span-2",
-  wide: "col-span-1 row-span-1 sm:col-span-2",
-};
-
 export function Gallery() {
   return (
     <section
-      className="section-padding bg-cream"
+      className="py-3 bg-cream"
       aria-labelledby="gallery-heading"
     >
-      <div className="container-padding mx-auto max-w-7xl">
+      <div className="container-padding mx-auto max-w-6xl">
         <ScrollReveal>
           <SectionHeading
             eyebrow="Estilo de vida"
@@ -24,35 +18,68 @@ export function Gallery() {
           />
         </ScrollReveal>
 
-        <div className="section-content grid auto-rows-[minmax(180px,1fr)] grid-cols-1 gap-3 sm:auto-rows-[200px] sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 lg:auto-rows-[220px]">
-          {galleryImages.map((image, index) => {
-            const isPlaceholder = image.src.includes("proximamente");
-
-            return (
+        <div className="section-content flex flex-col gap-1 sm:flex-row">
+          <div className="flex flex-1 flex-col gap-1">
+            {galleryImages.filter((_, index) => index % 2 === 0).map((image, index) => (
               <ScrollReveal
                 key={image.id}
-                className={spanClasses[image.span]}
                 delay={((index % 3) + 1) as 1 | 2 | 3}
               >
-                <div className="group relative h-full min-h-[200px] overflow-hidden rounded-sm">
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                <div className="overflow-hidden rounded-sm bg-earth/5 p-0.5">
+                  <div
                     className={
-                      isPlaceholder
-                        ? "object-contain p-4 transition-transform duration-500 ease-out"
-                        : "object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      image.span === "wide"
+                        ? "relative aspect-[16/9] w-full overflow-hidden rounded-sm bg-earth/10"
+                        : image.span === "tall"
+                        ? "relative aspect-[4/5] w-full overflow-hidden rounded-sm bg-earth/10"
+                        : "relative aspect-[1/1] w-full overflow-hidden rounded-sm bg-earth/10"
                     }
-                    loading="lazy"
-                    unoptimized
-                  />
-                  <div className="absolute inset-0 bg-earth/0 transition-colors duration-500 group-hover:bg-earth/10" />
+                  >
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover object-center"
+                      loading="lazy"
+                      unoptimized
+                    />
+                  </div>
                 </div>
               </ScrollReveal>
-            );
-          })}
+            ))}
+          </div>
+
+          <div className="flex flex-1 flex-col gap-1">
+            {galleryImages.filter((_, index) => index % 2 === 1).map((image, index) => (
+              <ScrollReveal
+                key={image.id}
+                delay={((index % 3) + 1) as 1 | 2 | 3}
+              >
+                <div className="overflow-hidden rounded-sm bg-earth/5 p-0.5">
+                  <div
+                    className={
+                      image.span === "wide"
+                        ? "relative aspect-[16/9] w-full overflow-hidden rounded-sm bg-earth/10"
+                        : image.span === "tall"
+                        ? "relative aspect-[4/5] w-full overflow-hidden rounded-sm bg-earth/10"
+                        : "relative aspect-[1/1] w-full overflow-hidden rounded-sm bg-earth/10"
+                    }
+                  >
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover object-center"
+                      loading="lazy"
+                      unoptimized
+                    />
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -12,8 +12,8 @@ export function ProductsSkeleton() {
       <div className="container-padding mx-auto max-w-7xl">
         <ScrollReveal>
           <SectionHeading
-            eyebrow="Galería"
-            title="Nuestra galería de sabores"
+            eyebrow="Productos"
+            title="Nuestros productos 100% naturales"
             description="Una selección de sales y mezclas artesanales. Cada pieza es una invitación a cocinar con intención, sin prisa y con alma."
           />
         </ScrollReveal>

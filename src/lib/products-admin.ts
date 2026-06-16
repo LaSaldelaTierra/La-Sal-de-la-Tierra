@@ -46,10 +46,27 @@ export async function createProduct(data: ProductoInput): Promise<string> {
     payload.categoria = data.categoria;
   }
 
-  console.log("[ProductsAdmin] createProduct payload", payload);
-  const ref = await addDoc(collection(db, COLLECTION), payload);
-  console.log("[ProductsAdmin] createProduct success", { id: ref.id });
-  return ref.id;
+  const collectionRef = collection(db, COLLECTION);
+  console.log("[ProductsAdmin] createProduct start", {
+    payload,
+    dbDefined: Boolean(db),
+    collectionPath: collectionRef.path,
+    collectionId: COLLECTION,
+  });
+
+  try {
+    console.log("[ProductsAdmin] createProduct before addDoc", {
+      collectionPath: collectionRef.path,
+      dbDefined: Boolean(db),
+    });
+    const ref = await addDoc(collectionRef, payload);
+    console.log("[ProductsAdmin] createProduct after addDoc", { id: ref.id });
+    console.log("[ProductsAdmin] createProduct before return", { id: ref.id });
+    return ref.id;
+  } catch (error) {
+    console.error("[ProductsAdmin] createProduct failed", error);
+    throw error;
+  }
 }
 
 export async function updateProduct(
@@ -67,9 +84,14 @@ export async function updateProduct(
   if (data.destacado !== undefined) payload.destacado = data.destacado;
   if (data.categoria !== undefined) payload.categoria = data.categoria;
 
-  console.log("[ProductsAdmin] updateProduct", { id, payload });
-  await updateDoc(doc(db, COLLECTION, id), payload);
-  console.log("[ProductsAdmin] updateProduct success", { id });
+  console.log("[ProductsAdmin] updateProduct start", { id, payload });
+  try {
+    await updateDoc(doc(db, COLLECTION, id), payload);
+    console.log("[ProductsAdmin] updateProduct success", { id });
+  } catch (error) {
+    console.error("[ProductsAdmin] updateProduct failed", { id, error });
+    throw error;
+  }
 }
 
 export async function deleteProduct(id: string): Promise<void> {
