@@ -132,11 +132,12 @@ export function ProductForm({ initialData, onSubmit, submitLabel }: ProductFormP
         categoria: fields.categoria.trim() || undefined,
       });
     } catch (err) {
-      setUploading(false);
-      setSaving(false);
       setError(
         err instanceof Error ? err.message : "No se pudo guardar el producto.",
       );
+    } finally {
+      setUploading(false);
+      setSaving(false);
     }
   };
 
