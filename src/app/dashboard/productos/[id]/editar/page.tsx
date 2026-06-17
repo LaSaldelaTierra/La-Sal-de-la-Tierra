@@ -37,7 +37,7 @@ export default function EditarProductoPage() {
     try {
       await updateProduct(params.id, data);
       console.log("[EditarProductoPage] updateProduct completed", { id: params.id });
-      router.push("/admin/productos");
+      router.push("/dashboard/productos");
       console.log("[EditarProductoPage] router.push called");
       router.refresh();
       console.log("[EditarProductoPage] router.refresh called");

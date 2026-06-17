@@ -8,18 +8,18 @@ export function AdminGuard({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
-  const isLoginPage = pathname === "/admin/login";
+  const isLoginPage = pathname === "/dashboard/login";
 
   useEffect(() => {
     if (loading) return;
 
     if (!user && !isLoginPage) {
-      router.replace("/admin/login");
+      router.replace("/");
       return;
     }
 
     if (user && isLoginPage) {
-      router.replace("/admin/productos");
+      router.replace("/dashboard/productos");
     }
   }, [user, loading, isLoginPage, router]);
 

@@ -40,7 +40,7 @@ function getAuthErrorMessage(err: unknown): string {
 export default function AdminLoginPage() {
   const { signIn } = useAuth();
   const router = useRouter();
-  const [email, setEmail] = useState(ADMIN_EMAIL);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -54,7 +54,7 @@ export default function AdminLoginPage() {
 
     try {
       await signIn(email.trim(), password);
-      router.replace("/admin/productos");
+      router.replace("/dashboard/productos");
     } catch (err) {
       const message = getAuthErrorMessage(err);
       setError(message);
@@ -77,15 +77,32 @@ export default function AdminLoginPage() {
           Inicia sesión para gestionar los productos.
         </p>
 
-        <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+        <form onSubmit={handleSubmit} className="mt-8 space-y-5" autoComplete="off">
+          <input
+            type="text"
+            name="username"
+            autoComplete="off"
+            value=""
+            readOnly
+            className="hidden"
+          />
+          <input
+            type="password"
+            name="password"
+            autoComplete="off"
+            value=""
+            readOnly
+            className="hidden"
+          />
           <div className="space-y-2">
             <label htmlFor="email" className="block font-sans text-sm font-medium text-earth">
               Correo
             </label>
             <input
               id="email"
+              name="email"
               type="email"
-              autoComplete="email"
+              autoComplete="off"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -101,8 +118,9 @@ export default function AdminLoginPage() {
             </label>
             <input
               id="password"
+              name="password"
               type="password"
-              autoComplete="current-password"
+              autoComplete="off"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}

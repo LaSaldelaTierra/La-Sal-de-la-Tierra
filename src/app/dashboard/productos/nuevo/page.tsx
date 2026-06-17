@@ -14,7 +14,7 @@ export default function NuevoProductoPage() {
     try {
       const id = await createProduct(data);
       console.log("[NuevoProductoPage] createProduct completed", { id });
-      router.push("/admin/productos");
+      router.push("/dashboard/productos");
       console.log("[NuevoProductoPage] router.push called");
       router.refresh();
       console.log("[NuevoProductoPage] router.refresh called");

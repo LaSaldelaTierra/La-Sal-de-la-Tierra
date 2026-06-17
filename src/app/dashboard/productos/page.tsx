@@ -53,7 +53,7 @@ export default function AdminProductosPage() {
       title="Productos"
       description="Gestiona el catálogo que aparece en el sitio público."
       action={
-        <Button href="/admin/productos/nuevo" size="sm">
+        <Button href="/dashboard/productos/nuevo" size="sm">
           Nuevo producto
         </Button>
       }
@@ -73,12 +73,11 @@ export default function AdminProductosPage() {
           <p className="font-sans text-sm text-earth-light">
             No hay productos todavía.
           </p>
-          <Button href="/admin/productos/nuevo" className="mt-4" size="sm">
+          <Button href="/dashboard/productos/nuevo" className="mt-4" size="sm">
             Crear el primero
           </Button>
         </div>
       )}
-
       {!loading && productos.length > 0 && (
         <div className="overflow-x-auto rounded-sm border border-sand/50">
           <table className="w-full min-w-[720px] border-collapse text-left">
@@ -145,7 +144,7 @@ export default function AdminProductosPage() {
                   <td className="px-4 py-4">
                     <div className="flex flex-wrap gap-2">
                       <Link
-                        href={`/admin/productos/${producto.id}/editar`}
+                        href={`/dashboard/productos/${producto.id}/editar`}
                         className="font-sans text-sm text-earth underline-offset-2 hover:underline"
                       >
                         Editar

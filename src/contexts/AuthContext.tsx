@@ -10,7 +10,9 @@ import {
   type ReactNode,
 } from "react";
 import {
+  browserSessionPersistence,
   onAuthStateChanged,
+  setPersistence,
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
   type User,
@@ -53,6 +55,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = useCallback(async (email: string, password: string) => {
     const auth = getFirebaseAuth();
+    await setPersistence(auth, browserSessionPersistence);
     const credential = await signInWithEmailAndPassword(auth, email, password);
 
     if (!isAllowedAdmin(credential.user)) {
