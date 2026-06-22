@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { MobileMenu } from "@/components/layout/MobileMenu";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { NAV_LINKS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -64,21 +65,26 @@ export function Navbar() {
             ))}
           </ul>
 
-          <Link
-            href="#contacto"
-            className="nav-cta hidden rounded-sm border border-earth/20 bg-earth px-5 py-2.5 font-sans text-[13px] font-medium tracking-wide text-cream transition-all duration-300 hover:border-earth hover:bg-earth-dark lg:inline-flex"
-          >
-            Escríbenos
-          </Link>
+          <div className="hidden items-center gap-3 lg:flex">
+            <ThemeToggle />
+            <Link
+              href="#contacto"
+              className="nav-cta rounded-sm border border-earth/20 bg-earth px-5 py-2.5 font-sans text-[13px] font-medium tracking-wide text-cream transition-all duration-300 hover:border-earth hover:bg-earth-dark"
+            >
+              Escríbenos
+            </Link>
+          </div>
 
-          <button
-            type="button"
-            className="relative z-[60] -mr-1 flex h-11 w-11 shrink-0 flex-col items-center justify-center gap-1.5 rounded-sm transition-colors active:bg-warm-beige/50 lg:hidden"
-            onClick={() => setMenuOpen((prev) => !prev)}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
-          >
+          <div className="flex items-center gap-2 lg:hidden">
+            <ThemeToggle className="h-11 w-11" />
+            <button
+              type="button"
+              className="relative z-[60] -mr-1 flex h-11 w-11 shrink-0 flex-col items-center justify-center gap-1.5 rounded-sm transition-colors active:bg-warm-beige/50"
+              onClick={() => setMenuOpen((prev) => !prev)}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+            >
             <span
               className={cn(
                 "block h-px w-5 bg-earth transition-all duration-300",
@@ -97,7 +103,8 @@ export function Navbar() {
                 menuOpen && "-translate-y-[5px] -rotate-45"
               )}
             />
-          </button>
+            </button>
+          </div>
         </nav>
       </header>
 

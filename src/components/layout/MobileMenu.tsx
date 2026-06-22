@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { NAV_LINKS } from "@/lib/constants";
@@ -14,7 +14,12 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({ open, onClose, navHeight }: MobileMenuProps) {
+  const [mounted, setMounted] = useState(false);
   useBodyScrollLock(open);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -27,38 +32,36 @@ export function MobileMenu({ open, onClose, navHeight }: MobileMenuProps) {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open, onClose]);
 
-  if (typeof document === "undefined") return null;
+  if (!mounted) {
+    return null;
+  }
 
   return createPortal(
     <div
       className={cn(
         "fixed inset-0 z-40 lg:hidden",
-        open ? "pointer-events-auto" : "pointer-events-none"
+        open ? "pointer-events-auto" : "pointer-events-none",
       )}
       aria-hidden={!open}
     >
-      {/* Light backdrop — page stays partially visible */}
       <button
         type="button"
         className={cn(
           "absolute inset-0 bg-earth/15 transition-opacity duration-500 ease-out",
-          open ? "opacity-100" : "opacity-0"
+          open ? "opacity-100" : "opacity-0",
         )}
         onClick={onClose}
         aria-label="Cerrar menú"
         tabIndex={open ? 0 : -1}
       />
 
-      {/* Slide-down panel below navbar */}
       <nav
         id="mobile-menu"
         aria-label="Menú móvil"
         style={{ top: navHeight }}
         className={cn(
           "absolute inset-x-0 border-b border-sand/25 bg-cream/97 shadow-[0_16px_48px_-16px_rgba(74,54,40,0.14)] backdrop-blur-md transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-          open
-            ? "translate-y-0 opacity-100"
-            : "-translate-y-3 opacity-0"
+          open ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0",
         )}
       >
         <ul className="mx-auto max-w-7xl px-5 py-6 pb-8 sm:px-6">
@@ -68,9 +71,7 @@ export function MobileMenu({ open, onClose, navHeight }: MobileMenuProps) {
               className={cn(
                 "border-b border-sand/20 last:border-b-0",
                 "transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-                open
-                  ? "translate-y-0 opacity-100"
-                  : "translate-y-2 opacity-0"
+                open ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0",
               )}
               style={{ transitionDelay: open ? `${80 + index * 45}ms` : "0ms" }}
             >
@@ -90,9 +91,7 @@ export function MobileMenu({ open, onClose, navHeight }: MobileMenuProps) {
           <li
             className={cn(
               "pt-5 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-              open
-                ? "translate-y-0 opacity-100"
-                : "translate-y-2 opacity-0"
+              open ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0",
             )}
             style={{
               transitionDelay: open
@@ -111,6 +110,6 @@ export function MobileMenu({ open, onClose, navHeight }: MobileMenuProps) {
         </ul>
       </nav>
     </div>,
-    document.body
+    document.body,
   );
 }

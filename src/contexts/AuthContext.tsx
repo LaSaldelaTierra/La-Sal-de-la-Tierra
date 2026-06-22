@@ -15,8 +15,9 @@ import {
   signOut as firebaseSignOut,
   type User,
 } from "firebase/auth";
-import { getFirebaseAuth } from "@/lib/firebase";
+import { initFirebaseAuth } from "@/lib/firebase";
 import { ADMIN_EMAIL } from "@/lib/admin";
+import { clearFirebaseAuthStorage } from "@/lib/auth-utils";
 
 interface AuthContextValue {
   user: User | null;
@@ -36,33 +37,40 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const auth = getFirebaseAuth();
+    let unsubscribe: (() => void) | undefined;
 
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser && !isAllowedAdmin(firebaseUser)) {
-        await firebaseSignOut(auth);
-        setUser(null);
-      } else {
-        setUser(firebaseUser);
-      }
-      setLoading(false);
+    initFirebaseAuth().then((auth) => {
+      unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+        if (firebaseUser && !isAllowedAdmin(firebaseUser)) {
+          await firebaseSignOut(auth);
+          clearFirebaseAuthStorage();
+          setUser(null);
+        } else {
+          setUser(firebaseUser);
+        }
+        setLoading(false);
+      });
     });
 
-    return unsubscribe;
+    return () => unsubscribe?.();
   }, []);
 
   const signIn = useCallback(async (email: string, password: string) => {
-    const auth = getFirebaseAuth();
+    const auth = await initFirebaseAuth();
     const credential = await signInWithEmailAndPassword(auth, email, password);
 
     if (!isAllowedAdmin(credential.user)) {
       await firebaseSignOut(auth);
+      clearFirebaseAuthStorage();
       throw new Error("No tienes permiso para acceder al panel de administración.");
     }
   }, []);
 
   const signOut = useCallback(async () => {
-    await firebaseSignOut(getFirebaseAuth());
+    const auth = await initFirebaseAuth();
+    await firebaseSignOut(auth);
+    clearFirebaseAuthStorage();
+    setUser(null);
   }, []);
 
   const value = useMemo(

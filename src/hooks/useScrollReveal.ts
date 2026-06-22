@@ -9,14 +9,25 @@ export function useScrollReveal<T extends HTMLElement>(threshold = 0.15) {
     const element = ref.current;
     if (!element) return;
 
+    const reveal = () => {
+      element.classList.add("is-visible");
+    };
+
+    const rect = element.getBoundingClientRect();
+    const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
+    if (inViewport) {
+      reveal();
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          element.classList.add("is-visible");
+          reveal();
           observer.unobserve(element);
         }
       },
-      { threshold, rootMargin: "0px 0px -40px 0px" }
+      { threshold, rootMargin: "0px 0px -40px 0px" },
     );
 
     observer.observe(element);

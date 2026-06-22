@@ -11,9 +11,9 @@ interface BrandLogoProps {
 }
 
 const sizes = {
-  sm: { image: 32, text: "text-[13px] max-[360px]:hidden sm:inline" },
-  md: { image: 48, text: "text-base sm:text-lg" },
-  lg: { image: 58, text: "text-lg sm:text-xl" },
+  sm: { image: 40, text: "text-sm max-[360px]:hidden sm:text-[15px]" },
+  md: { image: 52, text: "text-base sm:text-lg" },
+  lg: { image: 64, text: "text-xl sm:text-2xl" },
 };
 
 export function BrandLogo({

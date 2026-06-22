@@ -1,5 +1,10 @@
 import { initializeApp, getApps, getApp, type FirebaseApp } from "firebase/app";
-import { getAuth, type Auth } from "firebase/auth";
+import {
+  getAuth,
+  setPersistence,
+  browserSessionPersistence,
+  type Auth,
+} from "firebase/auth";
 import { getFirestore, type Firestore } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -23,6 +28,7 @@ const app = createFirebaseApp();
 export const db: Firestore = getFirestore(app);
 
 let authInstance: Auth | undefined;
+let authInitPromise: Promise<Auth> | undefined;
 
 export function getFirebaseAuth(): Auth {
   if (typeof window === "undefined") {
@@ -34,4 +40,19 @@ export function getFirebaseAuth(): Auth {
   return authInstance;
 }
 
-// Firebase Storage has been removed in favor of Cloudinary uploads.
+/** Sesión solo mientras el navegador esté abierto (no persiste entre visitas). */
+export async function initFirebaseAuth(): Promise<Auth> {
+  if (typeof window === "undefined") {
+    throw new Error("Firebase Auth solo está disponible en el cliente.");
+  }
+
+  if (!authInitPromise) {
+    authInitPromise = (async () => {
+      const auth = getFirebaseAuth();
+      await setPersistence(auth, browserSessionPersistence);
+      return auth;
+    })();
+  }
+
+  return authInitPromise;
+}

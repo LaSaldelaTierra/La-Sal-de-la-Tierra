@@ -8,8 +8,12 @@ export interface Producto {
   activo: boolean;
   imagen: string;
   destacado?: boolean;
-  /** Opcional: se muestra como etiqueta en la tarjeta del producto. */
+  /** Slugs de categoría, ej: ["sales", "parrilla"] */
+  categories: string[];
+  /** @deprecated Campo legacy — se migra a `categories` al leer */
   categoria?: string;
+  ingredientes?: string;
+  formato?: string;
 }
 
 export type ProductoInput = Omit<Producto, "id">;
@@ -19,9 +23,14 @@ export interface Product {
   id: string;
   name: string;
   description: string;
+  /** Etiqueta principal para la tarjeta */
   category: string;
+  categories: string[];
   image: string;
   imageAlt: string;
   price: number;
   stock: number;
+  destacado?: boolean;
+  ingredientes?: string;
+  formato?: string;
 }

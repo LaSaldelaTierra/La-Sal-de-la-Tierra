@@ -19,8 +19,8 @@ export function Hero() {
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-cream/75 sm:bg-cream/70" />
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent to-cream" />
+        <div className="absolute inset-0 bg-cream/75 sm:bg-cream/70 dark:bg-[#100e0c]/80" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent to-cream dark:to-[#100e0c]" />
       </div>
 
       <div className="relative mx-auto flex min-h-[100dvh] max-w-4xl flex-col items-center justify-center px-4 pb-10 pt-[calc(4.25rem+1rem)] text-center sm:px-8 sm:pb-12 sm:pt-[calc(4.75rem+1.25rem)]">

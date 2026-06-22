@@ -6,6 +6,9 @@ import Image from "next/image";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { Button } from "@/components/ui/Button";
 import { deleteProduct, getAdminProducts } from "@/lib/products-admin";
+import { getAdminCategories } from "@/lib/categories-admin";
+import { buildCategoryLabelMap } from "@/lib/categories-client";
+import { CategoryBadges } from "@/components/ui/CategoryBadges";
 import { formatPrice } from "@/lib/products-utils";
 import type { Producto } from "@/types/product";
 
@@ -13,16 +16,37 @@ export default function AdminProductosPage() {
   const [productos, setProductos] = useState<Producto[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [categoriesWarning, setCategoriesWarning] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [categoryLabelMap, setCategoryLabelMap] = useState<Map<string, string>>(
+    () => new Map(),
+  );
 
   const loadProductos = useCallback(async () => {
     setLoading(true);
     setError(null);
+    setCategoriesWarning(null);
+
     try {
       const data = await getAdminProducts();
       setProductos(data);
-    } catch {
+    } catch (err) {
+      console.error("Error al cargar productos:", err);
       setError("No se pudieron cargar los productos.");
+      setProductos([]);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const categorias = await getAdminCategories();
+      setCategoryLabelMap(buildCategoryLabelMap(categorias));
+    } catch (err) {
+      console.error("Error al cargar categorías:", err);
+      setCategoryLabelMap(new Map());
+      setCategoriesWarning(
+        "Los productos se cargaron, pero no fue posible obtener las categorías. Despliega las reglas de Firestore o revisa permisos.",
+      );
     } finally {
       setLoading(false);
     }
@@ -62,6 +86,12 @@ export default function AdminProductosPage() {
         <p className="font-sans text-sm text-earth-light">Cargando productos…</p>
       )}
 
+      {categoriesWarning && (
+        <p role="status" className="mb-4 font-sans text-sm text-amber-800">
+          {categoriesWarning}
+        </p>
+      )}
+
       {error && (
         <p role="alert" className="mb-4 font-sans text-sm text-red-700">
           {error}
@@ -81,11 +111,14 @@ export default function AdminProductosPage() {
 
       {!loading && productos.length > 0 && (
         <div className="overflow-x-auto rounded-sm border border-sand/50">
-          <table className="w-full min-w-[720px] border-collapse text-left">
+          <table className="w-full min-w-[880px] border-collapse text-left">
             <thead>
               <tr className="border-b border-sand/50 bg-warm-beige/40">
                 <th className="px-4 py-3 font-sans text-xs font-semibold uppercase tracking-wide text-earth-light">
                   Producto
+                </th>
+                <th className="px-4 py-3 font-sans text-xs font-semibold uppercase tracking-wide text-earth-light">
+                  Categorías
                 </th>
                 <th className="px-4 py-3 font-sans text-xs font-semibold uppercase tracking-wide text-earth-light">
                   Precio
@@ -124,6 +157,12 @@ export default function AdminProductosPage() {
                         )}
                       </div>
                     </div>
+                  </td>
+                  <td className="px-4 py-4">
+                    <CategoryBadges
+                      categoryIds={producto.categories}
+                      labelBySlug={categoryLabelMap}
+                    />
                   </td>
                   <td className="px-4 py-4 font-sans text-sm text-earth">
                     {formatPrice(producto.precio)}

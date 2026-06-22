@@ -9,26 +9,15 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import type { Product, Producto } from "@/types/product";
-import { parseProducto, sortProductos } from "@/lib/products-utils";
+import { mapProductoToProduct, parseProducto, sortProductos } from "@/lib/products-utils";
 
 const COLLECTION = "productos";
 
-export function mapProductoToProduct(producto: Producto): Product {
-  return {
-    id: producto.id,
-    name: producto.nombre,
-    description: producto.descripcion,
-    category: producto.categoria ?? "Artesanal",
-    image: producto.imagen,
-    imageAlt: producto.nombre,
-    price: producto.precio,
-    stock: producto.stock,
-  };
-}
+export { mapProductoToProduct };
 
 export async function getProducts(): Promise<Product[]> {
   const productos = await getActiveProductos();
-  return productos.map(mapProductoToProduct);
+  return productos.map((producto) => mapProductoToProduct(producto));
 }
 
 export async function getProductById(id: string): Promise<Product | null> {

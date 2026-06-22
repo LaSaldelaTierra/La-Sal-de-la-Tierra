@@ -40,7 +40,7 @@ function getAuthErrorMessage(err: unknown): string {
 export default function AdminLoginPage() {
   const { signIn } = useAuth();
   const router = useRouter();
-  const [email, setEmail] = useState(ADMIN_EMAIL);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -85,7 +85,7 @@ export default function AdminLoginPage() {
             <input
               id="email"
               type="email"
-              autoComplete="email"
+              autoComplete="off"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -102,7 +102,7 @@ export default function AdminLoginPage() {
             <input
               id="password"
               type="password"
-              autoComplete="current-password"
+              autoComplete="off"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}

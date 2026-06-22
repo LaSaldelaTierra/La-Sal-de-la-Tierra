@@ -18,17 +18,18 @@ export function ProductsSkeleton() {
           />
         </ScrollReveal>
 
-        <div className="section-content grid gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3 lg:gap-x-7 lg:gap-y-9">
+        <div className="section-content grid items-stretch gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 [&>*]:min-w-0">
           {Array.from({ length: 3 }).map((_, index) => (
-            <div key={index} className="flex flex-col animate-pulse">
-              <div className="aspect-[4/5] rounded-sm bg-warm-beige" />
-              <div className="pt-5 sm:pt-6">
-                <div className="mb-2 h-3 w-20 rounded bg-warm-beige" />
-                <div className="h-6 w-3/4 rounded bg-warm-beige" />
-                <div className="mt-3 space-y-2">
+            <div key={index} className="product-skeleton animate-pulse">
+              <div className="product-skeleton-image" />
+              <div className="product-skeleton-body">
+                <div className="h-3 w-16 rounded bg-warm-beige" />
+                <div className="h-5 w-3/4 rounded bg-warm-beige" />
+                <div className="space-y-2">
                   <div className="h-3 w-full rounded bg-warm-beige" />
                   <div className="h-3 w-5/6 rounded bg-warm-beige" />
                 </div>
+                <div className="mt-auto h-4 w-24 rounded bg-warm-beige" />
               </div>
             </div>
           ))}

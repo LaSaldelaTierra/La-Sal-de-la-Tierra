@@ -6,6 +6,8 @@ import "@fontsource/manrope/400.css";
 import "@fontsource/manrope/500.css";
 import "@fontsource/manrope/600.css";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { ThemeScript } from "@/components/theme/ThemeScript";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 import { IMAGES } from "@/lib/images";
 import { SITE } from "@/lib/constants";
 import "./globals.css";
@@ -70,18 +72,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
       <head>
+        <ThemeScript />
         <JsonLd />
       </head>
       <body className="antialiased">
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-sm focus:bg-earth focus:px-4 focus:py-2 focus:text-cream"
-        >
-          Saltar al contenido
-        </a>
-        {children}
+        <ThemeProvider>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-sm focus:bg-earth focus:px-4 focus:py-2 focus:text-cream"
+          >
+            Saltar al contenido
+          </a>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
