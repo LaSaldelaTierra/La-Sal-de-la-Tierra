@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "setup:admin": "node scripts/setup-admin.mjs"
+    "setup:admin": "node scripts/setup-admin.mjs",
+    "deploy:rules": "node scripts/deploy-firestore-rules.mjs",
+    "deploy:rules:cli": "firebase deploy --only firestore:rules"
   },
   "dependencies": {
     "@fontsource/manrope": "^5.2.8",
@@ -26,6 +28,8 @@
     "@types/react-dom": "^19.1.5",
     "eslint": "^9.27.0",
     "eslint-config-next": "^15.3.2",
+    "firebase-admin": "^14.0.0",
+    "firebase-tools": "^15.22.0",
     "tailwindcss": "^4.1.7",
     "typescript": "^5.8.3"
   }
