@@ -7,6 +7,7 @@ interface SectionHeadingProps {
   align?: "left" | "center";
   variant?: "light" | "dark";
   className?: string;
+  eyebrowClassName?: string;
 }
 
 export function SectionHeading({
@@ -16,6 +17,7 @@ export function SectionHeading({
   align = "center",
   variant = "light",
   className,
+  eyebrowClassName = "",
 }: SectionHeadingProps) {
   const isDark = variant === "dark";
 
@@ -31,7 +33,8 @@ export function SectionHeading({
         <p
           className={cn(
             "mb-3 font-sans text-[11px] font-semibold uppercase tracking-[0.25em]",
-            isDark ? "text-olive/90" : "text-olive"
+            isDark ? "text-olive/90" : "text-olive",
+            eyebrowClassName
           )}
         >
           {eyebrow}

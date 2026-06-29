@@ -82,10 +82,8 @@ export function ProductModal({
               alt={product.imageAlt}
               fill
               sizes="(max-width: 768px) 100vw, 420px"
-              className={`image-protected ${
-                isPlaceholder
-                  ? "object-contain p-6"
-                  : "object-cover"
+              className={`image-protected object-contain ${
+                isPlaceholder ? "p-6" : "p-4 sm:p-0"
               }`}
               unoptimized
               draggable={false}

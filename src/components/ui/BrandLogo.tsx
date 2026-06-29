@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 interface BrandLogoProps {
   showName?: boolean;
   size?: "sm" | "md" | "lg";
+  brandText?: string;
   className?: string;
   onClick?: () => void;
 }
@@ -19,10 +20,12 @@ const sizes = {
 export function BrandLogo({
   showName = true,
   size = "md",
+  brandText,
   className,
   onClick,
 }: BrandLogoProps) {
   const { image, text } = sizes[size];
+  const label = brandText ?? SITE.name;
 
   return (
     <Link
@@ -32,7 +35,7 @@ export function BrandLogo({
         "group inline-flex items-center gap-3 transition-opacity hover:opacity-90",
         className
       )}
-      aria-label={`${SITE.name} — Ir al inicio`}
+      aria-label={`${label} — Ir al inicio`}
     >
       <div
         className="relative shrink-0 overflow-hidden rounded-full"
@@ -57,7 +60,7 @@ export function BrandLogo({
             text
           )}
         >
-          {SITE.name}
+          {label}
         </span>
       )}
     </Link>

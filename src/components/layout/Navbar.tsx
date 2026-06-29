@@ -50,7 +50,11 @@ export function Navbar() {
           className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:gap-6 sm:px-6 sm:py-4 lg:px-8"
           aria-label="Navegación principal"
         >
-          <BrandLogo size="sm" onClick={menuOpen ? closeMenu : undefined} />
+          <BrandLogo
+            size="md"
+            brandText="La Sal de la Tierra.cl"
+            onClick={menuOpen ? closeMenu : undefined}
+          />
 
           <ul className="hidden items-center gap-8 lg:flex xl:gap-10">
             {NAV_LINKS.map((link) => (

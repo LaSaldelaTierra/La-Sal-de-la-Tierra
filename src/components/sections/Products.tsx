@@ -18,7 +18,7 @@ export function Products() {
         <ScrollReveal>
           <SectionHeading
             eyebrow="Productos"
-            title="Nuestros productos 100% naturales"
+            title="Nuestras selecciones 100% naturales"
             description="Explora nuestras sales y mezclas artesanales. Filtra por categoría o busca por nombre."
           />
         </ScrollReveal>

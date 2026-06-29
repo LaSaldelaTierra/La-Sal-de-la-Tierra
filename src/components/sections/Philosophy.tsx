@@ -40,6 +40,7 @@ export function Philosophy() {
         <ScrollReveal>
           <SectionHeading
             eyebrow="Nuestra esencia"
+            eyebrowClassName="text-sm sm:text-base font-bold tracking-[0.25em]"
             title="Más que sal, una manera de cocinar"
             description="Una marca nacida del respeto por la tierra, la cocina consciente y el placer de lo auténtico."
             variant="dark"

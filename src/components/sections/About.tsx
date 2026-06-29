@@ -39,7 +39,7 @@ export function About() {
                 <strong className="font-medium text-earth">{SITE.name}</strong>{" "}
                 nació en una cocina familiar, con la convicción de que los
                 ingredientes más simples pueden transformar un plato cuando se
-                elaboran con dedicación y respeto.
+                elaboran con dedicación y Amor.
               </p>
               <p>
                 Seleccionamos materias primas naturales, priorizamos procesos
@@ -47,9 +47,9 @@ export function About() {
                 sale de nuestro taller lleva horas de cuidado, mezcla y revisión.
               </p>
               <p>
-                Creemos en la cocina como ritual: compartir, crear y disfrutar.
-                Diseñamos productos que honran la calidad, la autenticidad y el
-                placer de cocinar bien.
+                Creemos en la cocina como un lugar para compartir, crear y
+                disfrutar. Diseñamos productos que honran la calidad, la
+                autenticidad y el placer de cocinar con pasión.
               </p>
             </div>
 

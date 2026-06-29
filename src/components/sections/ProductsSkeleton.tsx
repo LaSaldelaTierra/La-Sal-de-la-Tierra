@@ -13,7 +13,7 @@ export function ProductsSkeleton() {
         <ScrollReveal>
           <SectionHeading
             eyebrow="Productos"
-            title="Nuestros productos 100% naturales"
+            title="Nuestras selecciones 100% naturales"
             description="Una selección de sales y mezclas artesanales. Cada pieza es una invitación a cocinar con intención, sin prisa y con alma."
           />
         </ScrollReveal>
