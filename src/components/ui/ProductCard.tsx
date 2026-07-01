@@ -37,11 +37,16 @@ function getDescriptionPreview(description: string): {
 
 export function ProductCard({ product, labelBySlug }: ProductCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
+  const [isLandscapeImage, setIsLandscapeImage] = useState(false);
   const isPlaceholder = product.image.includes("proximamente");
   const { preview, showReadMore } = getDescriptionPreview(product.description);
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
+
+  const handleImageLoad = (metadata: { naturalWidth: number; naturalHeight: number }) => {
+    setIsLandscapeImage(metadata.naturalWidth > metadata.naturalHeight);
+  };
 
   return (
     <>
@@ -58,15 +63,17 @@ export function ProductCard({ product, labelBySlug }: ProductCardProps) {
             fill
             sizes="(max-width: 640px) 140px, 180px"
             className={`image-protected ${
-              isPlaceholder
-                ? "object-contain p-3 transition-transform duration-500 ease-out"
-                : "object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              isPlaceholder || isLandscapeImage
+                ? "image-contain object-contain p-3 transition-transform duration-500 ease-out"
+                : "image-cover object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
             }`}
+            style={{ objectFit: isPlaceholder || isLandscapeImage ? "contain" : "cover" }}
             loading="lazy"
             unoptimized
             draggable={false}
             onContextMenu={preventImageInteraction}
             onDragStart={preventImageInteraction}
+            onLoadingComplete={handleImageLoad}
           />
         </button>
 

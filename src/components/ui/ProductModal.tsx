@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import type { Product } from "@/types/product";
@@ -34,11 +34,38 @@ export function ProductModal({
     [onClose],
   );
 
+  const [hasOverflow, setHasOverflow] = useState(false);
+  const [imageOrientation, setImageOrientation] = useState<"landscape" | "portrait" | "square">("landscape");
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     if (!open) return;
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [open, handleKeyDown]);
+
+  const handleImageLoad = (metadata: { naturalWidth: number; naturalHeight: number }) => {
+    if (metadata.naturalWidth > metadata.naturalHeight) {
+      setImageOrientation("landscape");
+    } else if (metadata.naturalWidth < metadata.naturalHeight) {
+      setImageOrientation("portrait");
+    } else {
+      setImageOrientation("square");
+    }
+  };
+
+  useLayoutEffect(() => {
+    if (!open || !scrollRef.current) return;
+
+    const node = scrollRef.current;
+    const updateOverflow = () => {
+      setHasOverflow(node.scrollHeight > node.clientHeight + 2);
+    };
+
+    updateOverflow();
+    window.addEventListener("resize", updateOverflow);
+    return () => window.removeEventListener("resize", updateOverflow);
+  }, [open, product.id]);
 
   if (!open || typeof document === "undefined") return null;
 
@@ -76,19 +103,21 @@ export function ProductModal({
 
       <div className="product-modal-panel" onClick={(event) => event.stopPropagation()}>
         <div className="product-modal-media">
-          <div className="product-modal-image-wrap">
+          <div className={`product-modal-image-wrap product-modal-image--${imageOrientation}`}>
             <Image
               src={product.image}
               alt={product.imageAlt}
               fill
               sizes="(max-width: 768px) 100vw, 420px"
-              className={`image-protected object-contain ${
+              className={`image-protected product-modal-image ${
                 isPlaceholder ? "p-6" : "p-4 sm:p-0"
               }`}
+              style={{ objectFit: "contain", objectPosition: "center" }}
               unoptimized
               draggable={false}
               onContextMenu={preventImageInteraction}
               onDragStart={preventImageInteraction}
+              onLoadingComplete={handleImageLoad}
               priority
             />
           </div>
@@ -103,7 +132,7 @@ export function ProductModal({
             <p className="product-modal-price">{formatPrice(product.price)}</p>
           </div>
 
-          <div className="product-modal-scroll">
+          <div className="product-modal-scroll-placeholder">
             <section className="product-modal-section">
               <h3 className="product-modal-section-title">Descripción</h3>
               <p className="product-modal-text">{product.description}</p>

@@ -417,6 +417,16 @@ html.dark .product-card:hover {
   height: 100% !important;
 }
 
+.product-image .image-contain {
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+
+.product-image .image-cover {
+  object-fit: cover !important;
+  object-position: center center !important;
+}
+
 /* Protección básica de imágenes */
 .image-protected {
   user-select: none;
@@ -665,12 +675,34 @@ html.dark .product-card:hover {
   display: grid;
   width: min(100%, 56rem);
   max-height: min(90vh, 52rem);
-  overflow: hidden;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   border-radius: 0.5rem;
   border: 1px solid color-mix(in srgb, var(--color-sand) 55%, transparent);
   background: var(--color-card);
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
   animation: modal-rise 0.28s ease-out forwards;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 110, 62, 0.45) transparent;
+}
+
+.product-modal-panel::-webkit-scrollbar {
+  width: 10px;
+}
+
+.product-modal-panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.product-modal-panel::-webkit-scrollbar-thumb {
+  background: rgba(139, 110, 62, 0.35);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 
 .product-modal-media {
@@ -680,24 +712,66 @@ html.dark .product-card:hover {
   min-height: 18rem;
   background: var(--color-warm-beige);
   padding: 1rem;
+  overflow: hidden;
 }
 
 .product-modal-image-wrap {
   position: relative;
   width: 100%;
-  min-height: 20rem;
-  max-height: 100%;
+  min-height: 14rem;
+  max-height: min(42vh, 34rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.product-modal-image-wrap.product-modal-image--portrait {
+  max-height: min(70vh, 52rem);
+  width: min(100%, 32rem);
+  min-height: min(50vh, 36rem);
+}
+
+.product-modal-image-wrap.product-modal-image--square {
+  max-height: min(62vh, 44rem);
+  width: min(100%, 34rem);
+}
+
+.product-modal-image-wrap > span {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.product-modal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+.product-modal-image-wrap img,
+.product-modal-image-wrap picture,
+.product-modal-image-wrap .next-image,
+.product-modal-image-wrap .next-img {
+  object-fit: contain !important;
+  object-position: center center !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .product-modal-content {
   display: flex;
   min-height: 0;
+  min-width: 0;
   flex-direction: column;
+  overflow: visible;
 }
 
 .product-modal-header {
-  padding: 1.25rem 1.25rem 0.75rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-sand) 45%, transparent);
+  padding: 1.25rem 1.25rem 1rem;
 }
 
 .product-modal-eyebrow {
@@ -727,8 +801,9 @@ html.dark .product-card:hover {
   color: var(--color-earth);
 }
 
-.product-modal-scroll {
-  overflow-y: auto;
+.product-modal-scroll-placeholder {
+  display: flex;
+  flex-direction: column;
   padding: 1rem 1.25rem 1.35rem;
 }
 
@@ -796,7 +871,8 @@ html.dark .product-card:hover {
   }
 
   .product-modal-image-wrap {
-    min-height: 100%;
+    min-height: 14rem;
+    max-height: min(36vh, 26rem);
   }
 
   .product-modal-title {
